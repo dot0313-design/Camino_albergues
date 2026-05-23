@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<title>Camino Francés · 공립 알베르게 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #f4ead5;
+    --paper-dark: #ebe0c4;
+    --ink: #1a120a;
+    --ink-soft: #4a3826;
+    --rust: #a64b2a;
+    --rust-dark: #7a3520;
+    --moss: #5a5128;
+    --gold: #a87420;
+    --stamp: #8b2e1f;
+    --line: rgba(26, 18, 10, 0.25);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: light;
+      --paper: #f4ead5;
+      --paper-dark: #ebe0c4;
+      --ink: #1a120a;
+      --ink-soft: #4a3826;
+      --rust: #a64b2a;
+      --rust-dark: #7a3520;
+      --moss: #5a5128;
+      --gold: #a87420;
+      --stamp: #8b2e1f;
+      --line: rgba(26, 18, 10, 0.25);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
+    background-color: #f4ead5 !important;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(166, 75, 42, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(107, 97, 53, 0.08) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.15 0 0 0 0 0.08 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    color: #1a120a !important;
+    line-height: 1.65;
+    min-height: 100vh;
+    padding: 0 0 80px;
+    -webkit-text-fill-color: #1a120a;
+  }
+
+  /* ─── Header ─── */
+  header {
+    padding: 60px 24px 40px;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: var(--ink-soft);
+  }
+
+  .scallop {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: inline-block;
+    transform: rotate(-8deg);
+    filter: sepia(0.4);
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(36px, 8vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    font-style: italic;
+    color: #1a120a;
+  }
+
+  h1 .accent {
+    color: var(--rust);
+    font-weight: 600;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--ink-soft);
+    max-width: 480px;
+    margin: 16px auto 0;
+    line-height: 1.6;
+  }
+
+  .route-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--moss);
+    margin-top: 24px;
+    padding: 8px 16px;
+    display: inline-block;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+  }
+
+  /* ─── Controls ─── */
+  .controls {
+    max-width: 720px;
+    margin: 32px auto 0;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .search-wrap {
+    position: relative;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 14px 18px 14px 44px;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    color: #1a120a;
+    -webkit-text-fill-color: #1a120a;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .search-input:focus {
+    border-color: var(--rust);
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .search-input::placeholder {
+    color: var(--ink-soft);
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-soft);
+    pointer-events: none;
+  }
+
+  .filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 7px 14px;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .chip:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+  .chip.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    justify-content: center;
+    padding: 12px 16px;
+    margin-top: 4px;
+    border-top: 1px dashed var(--line);
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+  }
+
+  /* ─── Main ─── */
+  main {
+    max-width: 760px;
+    margin: 48px auto 0;
+    padding: 0 20px;
+  }
+
+  .region-block {
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+  .region-block.hidden { display: none; }
+
+  .region-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+  }
+
+  .region-header::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--rust);
+  }
+
+  .region-flag {
+    font-size: 20px;
+  }
+
+  .region-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #1a120a;
+  }
+
+  .region-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: #4a3826;
+    margin-left: auto;
+    text-transform: uppercase;
+  }
+
+  .albergue-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .albergue {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 16px;
+    padding: 18px 4px;
+    border-bottom: 1px dashed var(--line);
+    align-items: start;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .albergue:hover {
+    background: rgba(255, 255, 255, 0.3);
+    padding-left: 12px;
+  }
+
+  .albergue.hidden { display: none; }
+
+  .albergue-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .info-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+    align-items: center;
+  }
+
+  .name > .info-row {
+    margin-top: 8px;
+  }
+
+  .price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 8px;
+    background: rgba(168, 116, 32, 0.15);
+    color: #6b4818;
+    border: 1px solid rgba(168, 116, 32, 0.35);
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+  }
+
+  .price.donativo {
+    background: rgba(139, 46, 31, 0.12);
+    color: #7a2a1c;
+    border-color: rgba(139, 46, 31, 0.35);
+    font-style: italic;
+  }
+
+  .status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .status.open {
+    background: rgba(90, 81, 40, 0.15);
+    color: #3d3618;
+    border: 1px solid rgba(90, 81, 40, 0.4);
+  }
+  .status.open::before { background: #5a7a2a; }
+
+  .status.seasonal {
+    background: rgba(168, 116, 32, 0.12);
+    color: #6b4818;
+    border: 1px solid rgba(168, 116, 32, 0.35);
+  }
+  .status.seasonal::before { background: #a87420; }
+
+  .status.closed {
+    background: rgba(139, 46, 31, 0.12);
+    color: #7a2a1c;
+    border: 1px solid rgba(139, 46, 31, 0.35);
+  }
+  .status.closed::before { background: #8b2e1f; }
+
+  .booking {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .booking::before {
+    content: '';
+    width: 0;
+    height: 0;
+    display: inline-block;
+  }
+
+  .booking.reserve {
+    background: rgba(45, 90, 130, 0.12);
+    color: #1e4a70;
+    border: 1px solid rgba(45, 90, 130, 0.4);
+  }
+  .booking.reserve::before {
+    content: '✓';
+    font-weight: 700;
+    color: #1e4a70;
+    margin-right: 1px;
+  }
+
+  .booking.firstcome {
+    background: rgba(120, 60, 20, 0.1);
+    color: #5a3010;
+    border: 1px solid rgba(120, 60, 20, 0.35);
+  }
+  .booking.firstcome::before {
+    content: '⊙';
+    color: #5a3010;
+    margin-right: 1px;
+  }
+
+  .beds {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    background: rgba(42, 31, 21, 0.08);
+    color: #3a2810;
+    border: 1px solid rgba(42, 31, 21, 0.2);
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 6px 10px;
+    background: #1a120a;
+    color: #f4ead5;
+    border: 1px solid #1a120a;
+    border-radius: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .map-btn:hover,
+  .map-btn:active {
+    background: var(--rust);
+    border-color: var(--rust);
+    transform: translateY(-1px);
+  }
+
+  .map-btn svg {
+    flex-shrink: 0;
+  }
+
+  .town {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: #1a120a;
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+
+  .name {
+    font-size: 14px;
+    color: #1a120a;
+    line-height: 1.5;
+  }
+
+  .name .note {
+    color: #4a3826;
+    font-size: 12px;
+    font-style: italic;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    padding: 3px 7px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tag-donativo {
+    background: var(--gold);
+    color: var(--paper);
+  }
+
+  .tag-xunta {
+    background: var(--moss);
+    color: var(--paper);
+  }
+
+  .tag-parroquial {
+    background: var(--stamp);
+    color: var(--paper);
+  }
+
+  /* ─── Notes section ─── */
+  .notes {
+    max-width: 720px;
+    margin: 80px auto 0;
+    padding: 32px 24px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    position: relative;
+  }
+
+  .notes::before {
+    content: '⌖';
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f4ead5;
+    padding: 0 12px;
+    color: var(--rust);
+    font-size: 18px;
+  }
+
+  .notes h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: #1a120a;
+  }
+
+  .notes ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .notes li {
+    font-size: 14px;
+    color: #2a1d10;
+    padding: 8px 0 8px 24px;
+    position: relative;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .notes li:last-child { border-bottom: none; }
+
+  .notes li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--rust);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .notes a {
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rust);
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    text-align: center;
+    margin-top: 64px;
+    padding: 32px 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+
+  footer .stamp {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 2px solid var(--stamp);
+    border-radius: 50%;
+    color: var(--stamp);
+    transform: rotate(-6deg);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-soft);
+    font-style: italic;
+    display: none;
+  }
+
+  .empty.show { display: block; }
+
+  /* ─── Mobile ─── */
+  @media (max-width: 540px) {
+    header { padding: 40px 20px 28px; }
+    .albergue {
+      grid-template-columns: 1fr auto;
+      gap: 8px 12px;
+    }
+    .town {
+      grid-column: 1 / -1;
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+    .name { font-size: 13px; }
+    .albergue-meta {
+      flex-direction: row-reverse;
+      align-items: center;
+    }
+    .region-name { font-size: 22px; }
+    .region-meta { display: none; }
+  }
+
+  /* ─── Animation ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .region-block {
+    animation: fadeUp 0.6s ease-out backwards;
+  }
+
+  .region-block:nth-child(1) { animation-delay: 0.05s; }
+  .region-block:nth-child(2) { animation-delay: 0.1s; }
+  .region-block:nth-child(3) { animation-delay: 0.15s; }
+  .region-block:nth-child(4) { animation-delay: 0.2s; }
+  .region-block:nth-child(5) { animation-delay: 0.25s; }
+  .region-block:nth-child(6) { animation-delay: 0.3s; }
+  .region-block:nth-child(7) { animation-delay: 0.35s; }
+  .region-block:nth-child(8) { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="scallop">🐚</div>
+  <div class="eyebrow">El Camino de Santiago</div>
+  <h1>Camino <span class="accent">Francés</span><br>공립 알베르게</h1>
+  <p class="subtitle">생장피에드포르에서 산티아고까지<br>800km 길 위의 공립 숙소 안내서</p>
+  <div class="route-label">Saint-Jean-Pied-de-Port → Santiago de Compostela</div>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input type="text" class="search-input" id="search" placeholder="지역 또는 알베르게 이름으로 검색...">
+  </div>
+  <div class="filter-chips">
+    <button class="chip active" data-region="all">전체</button>
+    <button class="chip" data-region="france">프랑스</button>
+    <button class="chip" data-region="navarra">나바라</button>
+    <button class="chip" data-region="rioja">라리오하</button>
+    <button class="chip" data-region="burgos">부르고스</button>
+    <button class="chip" data-region="palencia">팔렌시아</button>
+    <button class="chip" data-region="leon">레온</button>
+    <button class="chip" data-region="galicia">갈리시아</button>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="status open">연중운영</span></span>
+    <span class="legend-item"><span class="status seasonal">시즌제</span></span>
+    <span class="legend-item"><span class="status closed">일시 휴무</span></span>
+    <span class="legend-item"><span class="price">유료</span></span>
+    <span class="legend-item"><span class="price donativo">도나티보</span></span>
+    <span class="legend-item"><span class="booking reserve">예약가능</span></span>
+    <span class="legend-item"><span class="booking firstcome">선착순</span></span>
+    <span class="legend-item"><span class="booking partial">부분예약</span></span>
+    <span class="legend-item"></span>
+  </div>
+</div>
+
+<main>
+
+  <!-- France -->
+  <section class="region-block" data-region="france">
+    <div class="region-header">
+      <span class="region-flag">🇫🇷</span>
+      <h2 class="region-name">France</h2>
+      <span class="region-meta">Stage 00 · Start</span>
+    </div>
+    <div class="albergue-list">
+      <div class="albergue">
+        <div class="town">Saint-Jean-Pied-de-Port</div>
+        <div class="name">Refuge Municipal Ospitalia<span class="note">Accueil Pèlerin · 순례 시작점 · 조식포함</span><div class="info-row"><span class="beds">🛏 34석</span><span class="price">€15</span><span class="status seasonal">3월~11월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Refuge%20Municipal%20Ospitalia%20Saint-Jean-Pied-de-Port" target="_blank" rel="noopener" aria-label="Saint-Jean-Pied-de-Port 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navarra -->
+  <section class="region-block" data-region="navarra">
+    <div class="region-header">
+      <span class="region-flag">🇪🇸</span>
+      <h2 class="region-name">Navarra</h2>
+      <span class="region-meta">Stage 01 — 07</span>
+    </div>
+    <div class="albergue-list">
+      <div class="albergue">
+        <div class="town">Roncesvalles</div>
+        <div class="name">Albergue de la Real Colegiata<span class="note">수도원 운영 · 준공립 · 예약 가능 · 예약 권장 · 겨울엔 €10 구관 34석</span><div class="info-row"><span class="beds">🛏 183석</span><span class="price">€15</span><span class="status open">연중운영</span><span class="booking reserve">예약 권장</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20de%20la%20Real%20Colegiata%20Roncesvalles" target="_blank" rel="noopener" aria-label="Roncesvalles 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Zubiri</div>
+        <div class="name">Albergue Municipal de Zubiri<span class="note">Concejo de Zubiri 운영</span><div class="info-row"><span class="beds">🛏 74석</span><span class="price">€16</span><span class="status seasonal">3월~11월</span><span class="booking reserve">예약 가능</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Zubiri%20Zubiri" target="_blank" rel="noopener" aria-label="Zubiri 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Larrasoaña</div>
+        <div class="name">Albergue Municipal de Larrasoaña<div class="info-row"><span class="beds">🛏 52석</span><span class="price">€10</span><span class="status seasonal">4월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Larrasoa%C3%B1a%20Larrasoa%C3%B1a" target="_blank" rel="noopener" aria-label="Larrasoaña 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Pamplona</div>
+        <div class="name">Albergue Jesús y María<span class="note">시립 · 대형 · 산페르민(7/6~15)·크리스마스 휴무</span><div class="info-row"><span class="beds">🛏 112석</span><span class="price">€12</span><span class="status open">연중운영</span><span class="booking partial">비수기만 예약</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Jes%C3%BAs%20y%20Mar%C3%ADa%20Pamplona" target="_blank" rel="noopener" aria-label="Pamplona 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Cizur Menor</div>
+        <div class="name">Albergue de la Orden de Malta<span class="note">기사단 협회 운영</span><div class="info-row"><span class="beds">🛏 27석</span><span class="price">€7</span><span class="status seasonal">6월~9월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20de%20la%20Orden%20de%20Malta%20Cizur%20Menor" target="_blank" rel="noopener" aria-label="Cizur Menor 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Puente la Reina</div>
+        <div class="name">Albergue Padres Reparadores<div class="info-row"><span class="beds">🛏 100석</span><span class="price">€8</span><span class="status seasonal">4월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Padres%20Reparadores%20Puente%20la%20Reina" target="_blank" rel="noopener" aria-label="Puente la Reina 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Estella</div>
+        <div class="name">Albergue Municipal de Estella<div class="info-row"><span class="beds">🛏 78석</span><span class="price">€10</span><span class="status seasonal">3월~10월</span><span class="booking partial">20% 예약가능</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Estella%20Estella" target="_blank" rel="noopener" aria-label="Estella 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Villamayor de Monjardín</div>
+        <div class="name">Albergue Parroquial Santo Andrés<div class="info-row"><span class="beds">🛏 14석</span><span class="price">€10</span><span class="status seasonal">4월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-parroquial">Parroquial</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Parroquial%20Santo%20Andr%C3%A9s%20Villamayor%20de%20Monjard%C3%ADn" target="_blank" rel="noopener" aria-label="Villamayor de Monjardín 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Los Arcos</div>
+        <div class="name">Albergue Municipal Isaac Santiago<div class="info-row"><span class="beds">🛏 70석</span><span class="price">€8</span><span class="status seasonal">3월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20Isaac%20Santiago%20Los%20Arcos" target="_blank" rel="noopener" aria-label="Los Arcos 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Torres del Río</div>
+        <div class="name">Albergue Casa Mariela<span class="note">지자체 연계</span><div class="info-row"><span class="beds">🛏 30석</span><span class="price">€10</span><span class="status seasonal">3월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Casa%20Mariela%20Torres%20del%20R%C3%ADo" target="_blank" rel="noopener" aria-label="Torres del Río 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Viana</div>
+        <div class="name">Albergue Parroquial Andrés Muñoz<div class="info-row"><span class="beds">🛏 30석</span><span class="price donativo">Donativo</span><span class="status seasonal">4월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-parroquial">Parroquial</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Parroquial%20Andr%C3%A9s%20Mu%C3%B1oz%20Viana" target="_blank" rel="noopener" aria-label="Viana 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- La Rioja -->
+  <section class="region-block" data-region="rioja">
+    <div class="region-header">
+      <span class="region-flag">🇪🇸</span>
+      <h2 class="region-name">La Rioja</h2>
+      <span class="region-meta">Stage 08 — 10</span>
+    </div>
+    <div class="albergue-list">
+      <div class="albergue">
+        <div class="town">Logroño</div>
+        <div class="name">Albergue Municipal de Logroño<span class="note">리모델링 일시 폐쇄</span><div class="info-row"><span class="beds">🛏 68석</span><span class="price">€10</span><span class="status closed">2026.4~5중순 휴무</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Logro%C3%B1o%20Logro%C3%B1o" target="_blank" rel="noopener" aria-label="Logroño 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Navarrete</div>
+        <div class="name">Albergue Municipal de Navarrete<div class="info-row"><span class="beds">🛏 34석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Navarrete%20Navarrete" target="_blank" rel="noopener" aria-label="Navarrete 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Nájera</div>
+        <div class="name">Albergue Municipal de Nájera<span class="note">강가의 명소 · 자원봉사자 운영</span><div class="info-row"><span class="beds">🛏 48석</span><span class="price donativo">Donativo</span><span class="status seasonal">3월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20N%C3%A1jera%20N%C3%A1jera" target="_blank" rel="noopener" aria-label="Nájera 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Santo Domingo de la Calzada</div>
+        <div class="name">Albergue Cofradía del Santo / Casa del Santo<div class="info-row"><span class="beds">🛏 164석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Cofrad%C3%ADa%20del%20Santo%20/%20Casa%20del%20Santo%20Santo%20Domingo%20de%20la%20Calzada" target="_blank" rel="noopener" aria-label="Santo Domingo de la Calzada 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Grañón</div>
+        <div class="name">Albergue Parroquial San Juan Bautista<span class="note">교회 종탑 아래의 도나티보 명소 · 교회 종탑 매트 숙박</span><div class="info-row"><span class="beds">🛏 40석</span><span class="price donativo">Donativo</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-donativo">Donativo</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Parroquial%20San%20Juan%20Bautista%20Gra%C3%B1%C3%B3n" target="_blank" rel="noopener" aria-label="Grañón 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Burgos -->
+  <section class="region-block" data-region="burgos">
+    <div class="region-header">
+      <span class="region-flag">🇪🇸</span>
+      <h2 class="region-name">Castilla y León · Burgos</h2>
+      <span class="region-meta">Stage 11 — 15</span>
+    </div>
+    <div class="albergue-list">
+      <div class="albergue">
+        <div class="town">Belorado</div>
+        <div class="name">Albergue Cuatro Cantones<span class="note">협회 운영</span><div class="info-row"><span class="beds">🛏 32석</span><span class="price donativo">Donativo</span><span class="status seasonal">4월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-parroquial">Parroquial</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Cuatro%20Cantones%20Belorado" target="_blank" rel="noopener" aria-label="Belorado 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Villafranca Montes de Oca</div>
+        <div class="name">Albergue Municipal San Antón Abad<div class="info-row"><span class="beds">🛏 36석</span><span class="price">€8</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20San%20Ant%C3%B3n%20Abad%20Villafranca%20Montes%20de%20Oca" target="_blank" rel="noopener" aria-label="Villafranca Montes de Oca 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">San Juan de Ortega</div>
+        <div class="name">Albergue Parroquial<div class="info-row"><span class="beds">🛏 60석</span><span class="price donativo">Donativo</span><span class="status seasonal">3월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-parroquial">Parroquial</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Parroquial%20San%20Juan%20de%20Ortega" target="_blank" rel="noopener" aria-label="San Juan de Ortega 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Agés</div>
+        <div class="name">Albergue Municipal de Agés<div class="info-row"><span class="beds">🛏 30석</span><span class="price">€10</span><span class="status seasonal">3월~11월</span><span class="booking reserve">예약 가능</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Ag%C3%A9s%20Ag%C3%A9s" target="_blank" rel="noopener" aria-label="Agés 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Burgos</div>
+        <div class="name">Albergue Casa del Cubo<span class="note">시립 · 대성당 인근 · 대성당 옆 · 시립</span><div class="info-row"><span class="beds">🛏 120석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Casa%20del%20Cubo%20Burgos" target="_blank" rel="noopener" aria-label="Burgos 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Hornillos del Camino</div>
+        <div class="name">Albergue Municipal de Hornillos<div class="info-row"><span class="beds">🛏 30석</span><span class="price">€8</span><span class="status seasonal">3월~10월</span><span class="booking reserve">비수기 예약 필수</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Hornillos%20Hornillos%20del%20Camino" target="_blank" rel="noopener" aria-label="Hornillos del Camino 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Hontanas</div>
+        <div class="name">Albergue Municipal de Hontanas<span class="note">메세타의 숨겨진 마을</span><div class="info-row"><span class="beds">🛏 40석</span><span class="price">€8</span><span class="status seasonal">3월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Hontanas%20Hontanas" target="_blank" rel="noopener" aria-label="Hontanas 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Castrojeriz</div>
+        <div class="name">Albergue Municipal San Esteban<div class="info-row"><span class="beds">🛏 30석</span><span class="price">€8</span><span class="status seasonal">3월~10월</span><span class="booking partial">비수기만 예약</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20San%20Esteban%20Castrojeriz" target="_blank" rel="noopener" aria-label="Castrojeriz 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Palencia -->
+  <section class="region-block" data-region="palencia">
+    <div class="region-header">
+      <span class="region-flag">🇪🇸</span>
+      <h2 class="region-name">Castilla y León · Palencia</h2>
+      <span class="region-meta">Stage 16 — 17</span>
+    </div>
+    <div class="albergue-list">
+      <div class="albergue">
+        <div class="town">Frómista</div>
+        <div class="name">Albergue Municipal de Frómista<div class="info-row"><span class="beds">🛏 56석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Fr%C3%B3mista%20Fr%C3%B3mista" target="_blank" rel="noopener" aria-label="Frómista 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Carrión de los Condes</div>
+        <div class="name">Albergue Parroquial Santa María<span class="note">수녀들의 노래로 유명한 명소 · 산타마리아 수녀원 운영</span><div class="info-row"><span class="beds">🛏 52석</span><span class="price donativo">Donativo</span><span class="status seasonal">5월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-parroquial">Parroquial</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Parroquial%20Santa%20Mar%C3%ADa%20Carri%C3%B3n%20de%20los%20Condes" target="_blank" rel="noopener" aria-label="Carrión de los Condes 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Calzadilla de la Cueza</div>
+        <div class="name">Albergue Municipal<div class="info-row"><span class="beds">🛏 22석</span><span class="price">€8</span><span class="status seasonal">4월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20Calzadilla%20de%20la%20Cueza" target="_blank" rel="noopener" aria-label="Calzadilla de la Cueza 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- León -->
+  <section class="region-block" data-region="leon">
+    <div class="region-header">
+      <span class="region-flag">🇪🇸</span>
+      <h2 class="region-name">Castilla y León · León</h2>
+      <span class="region-meta">Stage 18 — 25</span>
+    </div>
+    <div class="albergue-list">
+      <div class="albergue">
+        <div class="town">Sahagún</div>
+        <div class="name">Albergue Municipal Cluny<span class="note">Iglesia de la Trinidad 내부</span><div class="info-row"><span class="beds">🛏 80석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20Cluny%20Sahag%C3%BAn" target="_blank" rel="noopener" aria-label="Sahagún 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">El Burgo Ranero</div>
+        <div class="name">Albergue Municipal Domenico Laffi<div class="info-row"><span class="beds">🛏 12석</span><span class="price donativo">Donativo</span><span class="status seasonal">3월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20Domenico%20Laffi%20El%20Burgo%20Ranero" target="_blank" rel="noopener" aria-label="El Burgo Ranero 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Mansilla de las Mulas</div>
+        <div class="name">Albergue Municipal de Mansilla<div class="info-row"><span class="beds">🛏 60석</span><span class="price">€7</span><span class="status seasonal">3월~11월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Mansilla%20Mansilla%20de%20las%20Mulas" target="_blank" rel="noopener" aria-label="Mansilla de las Mulas 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">León</div>
+        <div class="name">Albergue Benedictinas Carbajalas<span class="note">San Francisco de Asís 시립 알베르게도 있음 · 베네딕트 수녀회</span><div class="info-row"><span class="beds">🛏 64석</span><span class="price">€7</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Benedictinas%20Carbajalas%20Le%C3%B3n" target="_blank" rel="noopener" aria-label="León 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Villadangos del Páramo</div>
+        <div class="name">Albergue Municipal<div class="info-row"><span class="beds">🛏 100석</span><span class="price">€8</span><span class="status seasonal">3월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20Villadangos%20del%20P%C3%A1ramo" target="_blank" rel="noopener" aria-label="Villadangos del Páramo 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Hospital de Órbigo</div>
+        <div class="name">Albergue Parroquial Karl Leisner<div class="info-row"><span class="beds">🛏 18석</span><span class="price donativo">Donativo</span><span class="status seasonal">4월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-parroquial">Parroquial</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Parroquial%20Karl%20Leisner%20Hospital%20de%20%C3%93rbigo" target="_blank" rel="noopener" aria-label="Hospital de Órbigo 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Astorga</div>
+        <div class="name">Albergue Municipal Siervas de María<div class="info-row"><span class="beds">🛏 156석</span><span class="price">€7</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20Siervas%20de%20Mar%C3%ADa%20Astorga" target="_blank" rel="noopener" aria-label="Astorga 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Rabanal del Camino</div>
+        <div class="name">Albergue Nuestra Señora del Pilar / Refugio Gaucelmo<div class="info-row"><span class="beds">🛏 36석</span><span class="price">€5</span><span class="status seasonal">3월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Nuestra%20Se%C3%B1ora%20del%20Pilar%20/%20Refugio%20Gaucelmo%20Rabanal%20del%20Camino" target="_blank" rel="noopener" aria-label="Rabanal del Camino 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Foncebadón</div>
+        <div class="name">Albergue Parroquial Domus Dei<span class="note">크루즈 데 페로 직전 마을 · 옛 교회 건물</span><div class="info-row"><span class="beds">🛏 18석</span><span class="price donativo">Donativo</span><span class="status seasonal">4월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-donativo">Donativo</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Parroquial%20Domus%20Dei%20Foncebad%C3%B3n" target="_blank" rel="noopener" aria-label="Foncebadón 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Ponferrada</div>
+        <div class="name">Albergue San Nicolás de Flüe<span class="note">협회 · 템플기사단 성 인근 · 템플기사단 성 근처</span><div class="info-row"><span class="beds">🛏 204석</span><span class="price donativo">Donativo</span><span class="status open">연중운영</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20San%20Nicol%C3%A1s%20de%20Fl%C3%BCe%20Ponferrada" target="_blank" rel="noopener" aria-label="Ponferrada 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Villafranca del Bierzo</div>
+        <div class="name">Albergue Municipal de Villafranca<div class="info-row"><span class="beds">🛏 60석</span><span class="price">€6</span><span class="status seasonal">3월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Municipal%20de%20Villafranca%20Villafranca%20del%20Bierzo" target="_blank" rel="noopener" aria-label="Villafranca del Bierzo 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galicia -->
+  <section class="region-block" data-region="galicia">
+    <div class="region-header">
+      <span class="region-flag">🇪🇸</span>
+      <h2 class="region-name">Galicia</h2>
+      <span class="region-meta">Stage 26 — 33 · Final</span>
+    </div>
+    <div class="albergue-list">
+      <div class="albergue">
+        <div class="town">O Cebreiro</div>
+        <div class="name">Albergue Xunta de Galicia<span class="note">갈리시아 진입 후 첫 마을 · Xunta</span><div class="info-row"><span class="beds">🛏 104석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순 · Xunta</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-xunta">Xunta</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Xunta%20de%20Galicia%20O%20Cebreiro" target="_blank" rel="noopener" aria-label="O Cebreiro 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Triacastela</div>
+        <div class="name">Albergue Xunta de Galicia<span class="note">Xunta</span><div class="info-row"><span class="beds">🛏 68석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순 · Xunta</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-xunta">Xunta</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Xunta%20de%20Galicia%20Triacastela" target="_blank" rel="noopener" aria-label="Triacastela 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Samos</div>
+        <div class="name">Albergue del Monasterio de Samos<span class="note">베네딕트 수도원</span><div class="info-row"><span class="beds">🛏 60석</span><span class="price donativo">Donativo</span><span class="status seasonal">4월~10월</span><span class="booking firstcome">선착순</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20del%20Monasterio%20de%20Samos%20Samos" target="_blank" rel="noopener" aria-label="Samos 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Sarria</div>
+        <div class="name">Albergue Xunta de Galicia (Mayor)<span class="note">100km 출발지 · Xunta · 100km 시작점</span><div class="info-row"><span class="beds">🛏 40석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순 · Xunta</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-xunta">Xunta</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Xunta%20de%20Galicia%20%28Mayor%29%20Sarria" target="_blank" rel="noopener" aria-label="Sarria 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Portomarín</div>
+        <div class="name">Albergue Xunta de Galicia<span class="note">Xunta</span><div class="info-row"><span class="beds">🛏 110석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순 · Xunta</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-xunta">Xunta</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Xunta%20de%20Galicia%20Portomar%C3%ADn" target="_blank" rel="noopener" aria-label="Portomarín 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Palas de Rei</div>
+        <div class="name">Albergue Xunta de Galicia<span class="note">Xunta</span><div class="info-row"><span class="beds">🛏 60석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순 · Xunta</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-xunta">Xunta</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Xunta%20de%20Galicia%20Palas%20de%20Rei" target="_blank" rel="noopener" aria-label="Palas de Rei 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Melide</div>
+        <div class="name">Albergue Xunta de Galicia<span class="note">문어요리 풀포 명소 · Xunta</span><div class="info-row"><span class="beds">🛏 156석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순 · Xunta</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-xunta">Xunta</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Xunta%20de%20Galicia%20Melide" target="_blank" rel="noopener" aria-label="Melide 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Arzúa</div>
+        <div class="name">Albergue Xunta de Galicia<span class="note">Xunta</span><div class="info-row"><span class="beds">🛏 56석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순 · Xunta</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-xunta">Xunta</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Xunta%20de%20Galicia%20Arz%C3%BAa" target="_blank" rel="noopener" aria-label="Arzúa 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">O Pedrouzo (Arca)</div>
+        <div class="name">Albergue Xunta de Galicia<span class="note">Xunta</span><div class="info-row"><span class="beds">🛏 150석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순 · Xunta</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-xunta">Xunta</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Xunta%20de%20Galicia%20O%20Pedrouzo%20%28Arca%29" target="_blank" rel="noopener" aria-label="O Pedrouzo (Arca) 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Monte do Gozo</div>
+        <div class="name">Albergue Xunta de Galicia<span class="note">대형 단지 · 산티아고 5km 전 · Xunta · 대형 단지</span><div class="info-row"><span class="beds">🛏 500석</span><span class="price">€10</span><span class="status open">연중운영</span><span class="booking firstcome">선착순 · Xunta</span></div></div>
+        <div class="albergue-meta"><span class="tag tag-xunta">Xunta</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Xunta%20de%20Galicia%20Monte%20do%20Gozo" target="_blank" rel="noopener" aria-label="Monte do Gozo 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+      <div class="albergue">
+        <div class="town">Santiago de Compostela</div>
+        <div class="name">Albergue Seminario Menor / San Lázaro<span class="note">순례의 종착지 · Seminario Menor</span><div class="info-row"><span class="beds">🛏 120석</span><span class="price">€12</span><span class="status open">연중운영</span><span class="booking reserve">예약 가능</span></div></div>
+        <div class="albergue-meta"><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Albergue%20Seminario%20Menor%20/%20San%20L%C3%A1zaro%20Santiago%20de%20Compostela" target="_blank" rel="noopener" aria-label="Santiago de Compostela 구글지도에서 보기"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>MAP</a></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="empty" id="empty">
+    검색 결과가 없습니다
+  </div>
+
+</main>
+
+<aside class="notes">
+  <h3>알아두면 좋은 점</h3>
+  <ul>
+    <li>가격은 1박 도미토리 침대 1개 기준 · <strong>도나티보(Donativo)</strong>는 자율 기부</li>
+    <li>운영 기간은 시즌제가 많음 (보통 3~10월) · 12월 중하순~1월은 대부분 휴무</li>
+    <li><strong>선착순(⊙)</strong> 알베르게는 예약 불가 · 보통 13:00~14:00 체크인 시작</li>
+    <li><strong>예약 가능(✓)</strong> 알베르게는 전화·이메일·웹으로 사전 예약 가능</li>
+    <li><strong>부분 예약(◐)</strong>은 비수기에만 예약 받음 (성수기는 선착순)</li>
+    <li>갈리시아 <strong>Xunta 알베르게</strong>(O Cebreiro~Monte do Gozo)는 전부 €10, 연중운영, 선착순</li>
+    <li>Roncesvalles는 예약 가능하지만 성수기엔 사실상 필수 · 도보 순례자 우선</li>
+    <li>21:00–22:00 소등 · 다음날 8:00 전 퇴실 · 크레덴시알(순례자 여권) 필수</li>
+    <li>가격·운영·예약 정보는 변동 가능 · 출발 직전 <a href="https://www.gronze.com" target="_blank">Gronze.com</a> 확인 권장</li>
+  </ul>
+</aside>
+
+<footer>
+  <div>Buen Camino · 부엔 카미노</div>
+  <div class="stamp">Ultreïa et Suseia</div>
+</footer>
+
+<script>
+  const searchInput = document.getElementById('search');
+  const chips = document.querySelectorAll('.chip');
+  const regionBlocks = document.querySelectorAll('.region-block');
+  const albergues = document.querySelectorAll('.albergue');
+  const emptyMsg = document.getElementById('empty');
+
+  let activeRegion = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let totalVisible = 0;
+
+    regionBlocks.forEach(block => {
+      const region = block.dataset.region;
+      const regionMatch = activeRegion === 'all' || activeRegion === region;
+
+      let visibleInRegion = 0;
+      const items = block.querySelectorAll('.albergue');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        const searchMatch = searchQuery === '' || text.includes(searchQuery);
+        if (regionMatch && searchMatch) {
+          item.classList.remove('hidden');
+          visibleInRegion++;
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
+      if (visibleInRegion > 0) {
+        block.classList.remove('hidden');
+        totalVisible += visibleInRegion;
+      } else {
+        block.classList.add('hidden');
+      }
+    });
+
+    emptyMsg.classList.toggle('show', totalVisible === 0);
+  }
+
+  searchInput.addEventListener('input', e => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    applyFilters();
+  });
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeRegion = chip.dataset.region;
+      applyFilters();
+    });
+  });
+</script>
+
+</body>
+</html>
